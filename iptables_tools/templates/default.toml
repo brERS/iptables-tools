@@ -1,0 +1,39 @@
+[ssh]
+# Example SSH service configuration
+# Ps.: To avoid losing remote access at the time of installation, the example uses port 2222 and not 22, which is the default for ssh
+
+[ssh.input] # Service.chain
+# Example of a parameter and its iptables equivalent
+protocol = "tcp" # Protocol to be used in the rule, equivalent: -p tcp -m tcp
+chain = "INPUT"  # Chain to be used in the rule, equivalent: -A INPUT
+port = 2222      # Port to be used in the rule, equivalent: --dport 2222
+
+[ssh.input.ipv4.accept] # Service.chain.ip_version.action
+mapping = [
+    # Example of a rule to allow access from a specific source to the SSH service in IPv4, equivalent to the following iptables rule:
+    # iptables -A INPUT -s 192.168.205.25/32 -p tcp -m tcp --dport 2222 -m comment --comment "Allow access from specific IPv4 network" -j ACCEPT
+    # iptables -A INPUT -s 127.0.1.1/32 -d 127.0.0.1/32 -p tcp -m tcp --dport 2222 -m comment --comment "Allow localhost from specific IPv4 network" -j ACCEPT
+    # {src='127.0.0.1/32', comment='Allow access from specific IPv4 network'},    
+    # {src='127.0.1.1', dst='127.0.0.1', comment='Permitir acesso de rede IPv4 específica'},
+]
+
+[ssh.input.ipv4.drop] # Service.chain.ip_version.action
+mapping = [
+    # Example of rule for total blocking for the SSH service in IPv4, equivalent to the following iptables rule:
+    # iptables -A INPUT -p tcp -m tcp --dport 2222 -m comment --comment "Drop SSH IPv4" -j DROP
+    # {comment='Bloqueia SSH IPv4'}
+]
+
+[ssh.input.ipv6.accept] # Service.chain.ip_version.action
+mapping = [
+    # Example of a rule to allow access from a specific source to the SSH service in IPv6, equivalent to the following iptables rule:
+    # ip6tables -A INPUT -s 2001:db8:ca5a:faca::/64 -p tcp -m tcp --dport 2222 -m comment --comment "Allow access from specific IPv6 network" -j ACCEPT
+    # {src='2001:db8:ca5a:faca::/64', comment='Permitir acesso de rede IPv6 específica'},
+]
+
+[ssh.input.ipv6.drop] # Service.chain.ip_version.action
+mapping = [
+    # Example of rule for total blocking for the SSH service in IPv6, equivalent to the following iptables rule:
+    # ip6tables -A INPUT -p tcp -m tcp --dport 2222 -m comment --comment "Drop SSH IPv6" -j DROP
+    # {comment='Bloqueia SSH IPv6'}
+]

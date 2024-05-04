@@ -1,0 +1,15 @@
+[Unit]
+Description=Iptables-tools service
+Documentation=/usr/local/bin/iptables-tools --help
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=root
+ExecStart=/usr/local/bin/iptables-tools start
+ExecStop=/usr/local/bin/iptables-tools stop
+ExecReload=/usr/local/bin/iptables-tools restart
+
+[Install]
+WantedBy=multi-user.target

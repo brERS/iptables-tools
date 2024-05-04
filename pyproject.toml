@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "iptables-tools"
+version = "0.1.0"
+description = "Manipule as regras do iptables de forma simples."
+authors = ["Edgar Reis <edgar_reis_silva@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+toml = "^0.10.2"
+
+[tool.poetry.scripts]
+"iptables-tools" = "iptables_tools.cli:cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
